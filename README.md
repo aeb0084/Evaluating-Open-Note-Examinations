@@ -30,7 +30,7 @@ Analysis and File Names| Brief Description | Link to File
 
 # Statistical and Data Visualization Code
 
-#Merging of quantitative and qualitative data to produce data sheet used in analysis
+# Merging of quantitative and qualitative data to produce data sheet used in analysis
 ```ruby
 #Download Survey Data
 #survey=read.csv("StudentData2.csv")
@@ -60,7 +60,7 @@ Analysis and File Names| Brief Description | Link to File
 
 ```ruby
 
-#load all necessary packages
+# load all necessary packages
 
 library(ggplot2)
 library(reshape2)
@@ -113,7 +113,7 @@ dat=subset(dat, Exam_Score != "0")
 
 ```
 
-#Evaluation of Student Performance
+# Evaluation of Student Performance
 ```ruby
 #Performance removing students scores of "0"
 
@@ -126,7 +126,7 @@ emmeans(lm.perf, list(pairwise ~ Exam), adjust = "tukey")
 
 ```
 
-#Percentages of each response (cumulative)
+# Percentages of each response (cumulative)
 ```ruby
 #Read in data sheet containing the frequency of qualitatively coded responses
 perc=read.csv("percentages.csv")
@@ -180,7 +180,7 @@ ggsave(p3, file="changes.png", width=5, height=5, dpi=600)
 
 ```
 
-#Produce plot of likert scale questions related to student perception
+# Produce plot of likert scale questions related to student perception
 ```ruby
 #subset all likert scale questions for analysis
 lik=dat[c(2,17:21)]
@@ -220,7 +220,7 @@ plot(pl1)
 
 ```
 
-#Perform linear model tests examining the impact of each categorical response on performance. Note, due to other analysis choices and secondary factors related to how final grades are calculated, we used exam_score as the sole reporting measure.
+# Perform linear model tests examining the impact of each categorical response on performance. Note, due to other analysis choices and secondary factors related to how final grades are calculated, we used exam_score as the sole reporting measure.
 ```ruby
 
 model1=lme(Stuided_less ~ Exam_Score + FinalGrade + FinalExam, random=list(~1|Email, ~1|Exam), data=dat)
@@ -270,10 +270,10 @@ dat$Stuided_less=as.factor(dat$Stuided_less)
 
 ```
 
-#Plot performance by format (significant relatioships only). Raincloud plots were designed to show a point distribution of data with an overlaying boxplot alongside a density plot distribution.
+# Plot performance by format (significant relatioships only). Raincloud plots were designed to show a point distribution of data with an overlaying boxplot alongside a density plot distribution.
 
 
-##Prepared Notes
+## Prepared Notes
 ```ruby
 
 #Prepared Notes 
@@ -296,7 +296,7 @@ raincloud_theme  +
 ggsave(notes, file="notes.png", height=2, width=4, dpi = 300)
 
 ```
-##Focus on Understanding
+## Focus on Understanding
 
 ```ruby
 #Focus on Understanding
@@ -320,7 +320,7 @@ ggsave(under, file="under.png", height=2, width=4, dpi = 300)
 
 ```
 
-##Utilizing External Resources
+## Utilizing External Resources
 ```ruby
 #External Resources
 res=ggplot(data = dat, aes(y = Exam_Score, x = External_resources, fill = External_resources)) +
@@ -343,7 +343,7 @@ ggsave(res, file="res.png", height=2, width=4, dpi = 300)
 
 ```
 
-#Muliple Choices Responses- Effect on Performance
+# Muliple Choices Responses- Effect on Performance
 ```ruby
 unique(dat$Anxiety.SS)
 #Set factor level order to go from "Greatly Reduced" to "Greatly Raised"
