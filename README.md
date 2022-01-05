@@ -27,7 +27,7 @@ Note: The final data set used in analysis is available for public use. Additiona
 Analysis and File Names| Brief Description | Link to File
 -------------------------------------|------------------------------------ | -----------------------------------------------------
 Final Data File                | data file containing merged quant and qual data |   [Combined Data File](merged_formatted2.csv)
-Qualitative Thematic Breakdown | data file containing the frequency of qualitatively coded responses |  [Qualitative Frequencies](percetages.csv)
+Qualitative Thematic Breakdown | data file containing the frequency of qualitatively coded responses |  [Qualitative Frequencies](percentages.csv)
 Data Analysis File             | R Markdown file containing all analysis and data visualization code  | [Code File](OpenNoteCode_Github_currated.Rmd)
 
 # Statistical and Data Visualization Code
