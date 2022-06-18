@@ -41,7 +41,7 @@ dat <- read.csv("~/Box/Research Projects/Open-Note/Open Note Data.csv", header=T
 setwd("~/Box/Research Projects/Open-Note")
 ```
 
-```{r}
+```ruby
 #load all necessary packages
 library(ggplot2)
 library(reshape2)
@@ -64,8 +64,11 @@ library(likert)
 library(ggalt)
 library(ggforce)
 library(lme4)
+
 dodge <- position_dodge(width = 0.6)
-#design a raincloud theme for plotting  data. 
+
+#design a raincloud theme for plotting  data.
+
 raincloud_theme = theme(
 text = element_text(size = 10),
 axis.title.x = element_text(size = 16),
@@ -88,8 +91,9 @@ dat=subset(dat, Exam_Score != "0")
 ```
 
 Student Study Habits - Descriptive
+
+```ruby
 #Percentages of each response (cumulative)
-```{r}
 #Read in data sheet containing the frequency of qualitatively coded responses
 perc=read.csv("~/Box/Research Projects/Open-Note/Percent.csv")
 #Calculate the average for each qualtiative thematic category
@@ -115,7 +119,7 @@ ggsave(p1, file="responses.png", height=5, width=3, dpi = 300)
 
 ## Plot of responses by exam faceted by Category
 
-```{r}
+```ruby
 #subset data to only include categories of interest (in this case, categories where response frequency changed visually over time)
 changes=subset(perc, Category == "External resources" | Category == "Less anxious" | Category == "Prepared notes" | Category == "Studied less" | Category == "Understanding")
 #plot response categories of interest by exam and group by response category
@@ -132,7 +136,7 @@ ggsave(p3, file="changes.png", width=5, height=5, dpi=600)
 ```
 
 
-```{r}
+```ruby
 #install.packages("devtools")
 #devtools::install_github("jaredhuling/jcolors")
 library(jcolors)
@@ -157,7 +161,7 @@ dat=subset(dat, Exam_Score != "0")
 #Plot performance by format (significant relationships only). Raincloud plots were designed to show a point distribution of data with an overlaying boxplot alongside a density plot distribution.
 
 ##Prepared Notes
-```{r}
+```ruby
 dat<-dat%>%
       filter(!is.na(Prepared_Notes))
 
@@ -182,7 +186,7 @@ ggsave(notes, file="notes.png", height=2, width=4, dpi = 300)
 ```
 
 ##Focus on Understanding
-```{r}
+```ruby
 #Focus on Understanding
 under=ggplot(data = dat, aes(y = Exam_Score, x = Understanding, fill = Understanding)) +
 geom_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .8, width=.4) +
@@ -204,7 +208,7 @@ ggsave(under, file="under.png", height=2, width=4, dpi = 300)
 ```
 
 ##Utilizing External Resources
-```{r}
+```ruby
 #External Resources
 res=ggplot(data = dat, aes(y = Exam_Score, x = External_resources, fill = External_resources)) +
 geom_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .8, width=.4) +
@@ -227,7 +231,7 @@ ggsave(res, file="res.png", height=2, width=4, dpi = 300)
 
 
 #Perform linear model tests examining the impact of each categorical response on performance. Note, due to other analysis choices and secondary factors related to how final grades are calculated, we used exam_score as the sole reporting measure. As the coded responses were either mentioned (1) or not mentioned (0) by a student, these were binary outcomes. 
-```{r}
+```ruby
 #First, we can examine all of the study habits together. We have good justification for putting all of these study habits in the model since how students prepare for exams impacts their student performance, according to previous literature. We use ANOVA to generate one p-value because running multiple t-tests increases your risk of committing type 1 error – rejecting the null when it is actually true. If the anova p-value is significant, then we can run a post hoc test to look for differences among the groups. We usually use Tukey’s, but there are many because they all balance error.
 model1=lme(Exam_Score ~ Did_not_study + Studied_same + Less_anxious + No_Notes + Prepared_Notes + Understanding + External_resources + Studied_more, random=list(~1|Email), data=dat, na.action=na.omit)
 anova(model1) #This shows prepared_notes, understanding, and external_resources have a significant effect on student exam performance. 
@@ -247,7 +251,7 @@ AIC(model3) #3354 This is higher again, and I believe out of the range where it 
 ```
 
 
-```{r}
+```ruby
 #install.packages("devtools")
 #devtools::install_github("jaredhuling/jcolors")
 library(jcolors)
@@ -264,7 +268,7 @@ dat$Stuided_less=as.factor(dat$Stuided_less)
 
 
 ##Prepared Notes
-```{r}
+```ruby
 #Prepared Notes 
 notes=ggplot(data = dat, aes(y = Exam_Score, x = Prepared_Notes, fill = Prepared_Notes)) +
 geom_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .8, width=.4) +
@@ -286,7 +290,7 @@ ggsave(notes, file="notes.png", height=2, width=4, dpi = 300)
 ```
 ##Focus on Understanding
 
-```{r}
+```ruby
 #Focus on Understanding
 under=ggplot(data = dat, aes(y = Exam_Score, x = Understanding, fill = Understanding)) +
 geom_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .8, width=.4) +
@@ -308,7 +312,7 @@ ggsave(under, file="under.png", height=2, width=4, dpi = 300)
 ```
 
 ##Utilizing External Resources
-```{r}
+```ruby
 #External Resources
 res=ggplot(data = dat, aes(y = Exam_Score, x = External_resources, fill = External_resources)) +
 geom_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .8, width=.4) +
@@ -329,13 +333,10 @@ res
 ggsave(res, file="res.png", height=2, width=4, dpi = 300)
 ```
 
-
-
-
-
 Student Perceptions
+
+```ruby
 #Produce plot of likert scale questions related to student perception
-```{r}
 ##I think the anxiety and score labels are switched around, but I'm not sure how to fix this. Ask Abby
 dat <- read.csv("~/Box/Research Projects/Open-Note/Open Note Data.csv", header=TRUE)
 dat=subset(dat, Exam_Score != "0")%>%
@@ -418,7 +419,7 @@ dat %>%
 ```
 
 Student perceptions as related to exam performance
-```{r}
+```ruby
 #All perceptions in one model
 model.perceptions1=(lme(Exam_Score~Study.SS + Anxiety.SS + Score.SS + ClassStudy.SS, random=~1|Email, data=dat, na.action = na.omit))
 anova(model.perceptions1)
@@ -432,7 +433,7 @@ AIC(model.perceptions2) #3138. This is a higher AIC score, but we want the lowes
 ```
 
 #Muliple Choices Responses- Effect on Performance
-```{r}
+```ruby
 unique(dat$Anxiety.SS)
 #Set factor level order to go from "Greatly Reduced" to "Greatly Raised"
 dat$Anxiety.SS <- factor(dat$Anxiety.SS,levels = c("Greatly Reduced", "Slightly Reduced", "No Effect", "Slightly Raised", "Greatly Raised"))
@@ -461,7 +462,7 @@ ggsave(p9, file="anxiety.png", height=5, width=8, dpi = 300)
 ```
 
 
-```{r}
+```ruby
 unique(dat$Study.SS)
 dat$Study.SS <- factor(dat$Study.SS,levels = c("Much Less", "Slightly Less", "Same Amount", "Slightly More", "Much More"))
 #Run linear model evaluating the relationship between exam performance and student reported studying
@@ -488,7 +489,7 @@ p10
 ggsave(p10, file="study.png", height=5, width=8, dpi = 300)
 ```
 
-```{r}
+```ruby
 dat <- read.csv("~/Box/Research Projects/Open-Note/Open Note Data.csv", header=TRUE)
 dat=subset(dat, Exam_Score != "0")
 #Remove all scores of "0", which indicates cheating, or that they did not take the exam.
@@ -525,7 +526,7 @@ ggsave(model.score, file="model.score.png", height=5, width=8, dpi = 300)
 ```
 
 #Stats to reaffirm that the likert scale items did not differ over time. Can switch the orders. 
-```{r}
+```ruby
 
 dat <- read.csv("~/Box/Research Projects/Open-Note/Open Note Data.csv", header=TRUE)
 dat=subset(dat, Exam_Score != "0")%>%
