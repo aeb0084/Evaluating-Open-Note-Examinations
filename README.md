@@ -158,9 +158,9 @@ dat=subset(dat, Exam_Score != "0")
    select(Email, Exam, Exam_Score, Score.SS, Anxiety.SS:External_resources) #remove unnecessary columns
 ```
 
-#Plot performance by format (significant relationships only). Raincloud plots were designed to show a point distribution of data with an overlaying boxplot alongside a density plot distribution.
+### Plot performance by format (significant relationships only). Raincloud plots were designed to show a point distribution of data with an overlaying boxplot alongside a density plot distribution.
 
-##Prepared Notes
+## Prepared Notes
 ```ruby
 dat<-dat%>%
       filter(!is.na(Prepared_Notes))
@@ -185,7 +185,7 @@ notes
 ggsave(notes, file="notes.png", height=2, width=4, dpi = 300)
 ```
 
-##Focus on Understanding
+## Focus on Understanding
 ```ruby
 #Focus on Understanding
 under=ggplot(data = dat, aes(y = Exam_Score, x = Understanding, fill = Understanding)) +
@@ -207,7 +207,7 @@ under
 ggsave(under, file="under.png", height=2, width=4, dpi = 300)
 ```
 
-##Utilizing External Resources
+## Utilizing External Resources
 ```ruby
 #External Resources
 res=ggplot(data = dat, aes(y = Exam_Score, x = External_resources, fill = External_resources)) +
@@ -230,7 +230,7 @@ ggsave(res, file="res.png", height=2, width=4, dpi = 300)
 ```
 
 
-#Perform linear model tests examining the impact of each categorical response on performance. Note, due to other analysis choices and secondary factors related to how final grades are calculated, we used exam_score as the sole reporting measure. As the coded responses were either mentioned (1) or not mentioned (0) by a student, these were binary outcomes. 
+### Perform linear model tests examining the impact of each categorical response on performance. Note, due to other analysis choices and secondary factors related to how final grades are calculated, we used exam_score as the sole reporting measure. As the coded responses were either mentioned (1) or not mentioned (0) by a student, these were binary outcomes. 
 ```ruby
 #First, we can examine all of the study habits together. We have good justification for putting all of these study habits in the model since how students prepare for exams impacts their student performance, according to previous literature. We use ANOVA to generate one p-value because running multiple t-tests increases your risk of committing type 1 error – rejecting the null when it is actually true. If the anova p-value is significant, then we can run a post hoc test to look for differences among the groups. We usually use Tukey’s, but there are many because they all balance error.
 model1=lme(Exam_Score ~ Did_not_study + Studied_same + Less_anxious + No_Notes + Prepared_Notes + Understanding + External_resources + Studied_more, random=list(~1|Email), data=dat, na.action=na.omit)
@@ -264,10 +264,10 @@ dat$Studied_same=as.factor(dat$Studied_same)
 dat$Stuided_less=as.factor(dat$Stuided_less)
 ```
 
-#Plot performance by format (significant relatioships only). Raincloud plots were designed to show a point distribution of data with an overlaying boxplot alongside a density plot distribution.
+### Plot performance by format (significant relatioships only). Raincloud plots were designed to show a point distribution of data with an overlaying boxplot alongside a density plot distribution.
 
 
-##Prepared Notes
+## Prepared Notes
 ```ruby
 #Prepared Notes 
 notes=ggplot(data = dat, aes(y = Exam_Score, x = Prepared_Notes, fill = Prepared_Notes)) +
@@ -288,7 +288,7 @@ raincloud_theme  +
 notes
 ggsave(notes, file="notes.png", height=2, width=4, dpi = 300)
 ```
-##Focus on Understanding
+## Focus on Understanding
 
 ```ruby
 #Focus on Understanding
@@ -311,7 +311,7 @@ under
 ggsave(under, file="under.png", height=2, width=4, dpi = 300)
 ```
 
-##Utilizing External Resources
+## Utilizing External Resources
 ```ruby
 #External Resources
 res=ggplot(data = dat, aes(y = Exam_Score, x = External_resources, fill = External_resources)) +
@@ -333,7 +333,7 @@ res
 ggsave(res, file="res.png", height=2, width=4, dpi = 300)
 ```
 
-Student Perceptions
+## Student Perceptions
 
 ```ruby
 #Produce plot of likert scale questions related to student perception
@@ -418,7 +418,7 @@ dat %>%
   summarise(n=n()) #-2 = 98, -1 =181, 0 = 107, 1=15, 2=5, NA =19 # what is this fifth likert scale variable? The numbers dont' match any of the other ones, but we only measured four perceptions...
 ```
 
-Student perceptions as related to exam performance
+## Student perceptions as related to exam performance
 ```ruby
 #All perceptions in one model
 model.perceptions1=(lme(Exam_Score~Study.SS + Anxiety.SS + Score.SS + ClassStudy.SS, random=~1|Email, data=dat, na.action = na.omit))
@@ -432,7 +432,7 @@ anova(model.perceptions2)
 AIC(model.perceptions2) #3138. This is a higher AIC score, but we want the lowest AIC score, so we select model.perceptions1 model, which contains all of the student perceptions in the model. Now, how do we check for differences between the categories with emmeans when all of these are in the model together?
 ```
 
-#Muliple Choices Responses- Effect on Performance
+## Muliple Choices Responses- Effect on Performance
 ```ruby
 unique(dat$Anxiety.SS)
 #Set factor level order to go from "Greatly Reduced" to "Greatly Raised"
@@ -525,7 +525,7 @@ ggsave(model.score, file="model.score.png", height=5, width=8, dpi = 300)
 
 ```
 
-#Stats to reaffirm that the likert scale items did not differ over time. Can switch the orders. 
+## Stats to reaffirm that the likert scale items did not differ over time. Can switch the orders. 
 ```ruby
 
 dat <- read.csv("~/Box/Research Projects/Open-Note/Open Note Data.csv", header=TRUE)
